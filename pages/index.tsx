@@ -1,7 +1,9 @@
 import { Inter } from "next/font/google";
 import styles from "../styles/Home.module.css";
 import Head from "next/head";
-import ManualHeader from "../components/ManualHeader";
+// import ManualHeader from "../components/ManualHeader";
+import Header from "../components/Header";
+import LotteryEntrance from "@/components/LotteryEntrance";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,8 +15,9 @@ export default function Home() {
         <meta name="description" content="Our Smart Contract Lottery" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ManualHeader />
-      asdf
+      {/* <ManualHeader /> */}
+      <Header />
+      <LotteryEntrance />
     </div>
   );
 }

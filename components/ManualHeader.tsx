@@ -2,7 +2,14 @@ import { useMoralis } from "react-moralis";
 import { useEffect } from "react";
 
 export default function ManualHeader() {
-  const { enableWeb3, account, isWeb3Enabled } = useMoralis();
+  const {
+    enableWeb3,
+    account,
+    isWeb3Enabled,
+    Moralis,
+    deactivateWeb3,
+    isWeb3EnableLoading,
+  } = useMoralis();
 
   //no dependency given: run anytime when something re-render
   //blank dependency: run once on load (react.strict mode run twice)
@@ -14,7 +21,16 @@ export default function ManualHeader() {
       }
     }
   }, [isWeb3Enabled]);
-  useEffect(() => {}, []);
+  useEffect(() => {
+    Moralis.onAccountChanged((account) => {
+      console.log(`Account changed to ${account}`);
+      if (account == null) {
+        window.localStorage.removeItem("connected");
+        deactivateWeb3();
+        console.log("Null account found");
+      }
+    });
+  }, []);
   return (
     <div>
       {account ? (
@@ -30,6 +46,7 @@ export default function ManualHeader() {
               window.localStorage.setItem("connected", "injected");
             }
           }}
+          disabled={isWeb3EnableLoading}
         >
           Connect
         </button>
